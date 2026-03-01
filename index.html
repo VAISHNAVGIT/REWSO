@@ -1,0 +1,95 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AER | Powering Tomorrow, Sustainably.</title>
+  <meta name="description" content="AER renewable energy solutions with cinematic interactive storytelling." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+  <script src="https://unpkg.com/lenis@1.1.16/dist/lenis.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r158/three.min.js" defer></script>
+  
+</head>
+<body>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="cursor-dot" aria-hidden="true"></div>
+  <div class="preloader" id="preloader" aria-hidden="true">
+    <div class="loader-wrap"><div class="logo">AER</div><div class="battery"><div class="battery-fill" id="batteryFill"></div></div><p>Charging clean energy experience...</p></div>
+  </div>
+  <div class="nav">
+    <a href="#home" class="brand magnetic">AER</a>
+    <!-- hamburger toggle for small screens -->
+    <button class="nav-toggle" aria-label="Toggle menu">&#9776;</button>
+    <div class="nav-links">
+      <a href="#home" class="nav-link magnetic">Home</a><a href="#about" class="nav-link magnetic">About</a><a href="#services" class="nav-link magnetic">Services</a><a href="stories.html" class="nav-link magnetic">Stories</a><a href="#team" class="nav-link magnetic">Team</a><a href="#contact" class="nav-link magnetic">Contact</a>
+    </div>
+  </div>
+  <main>
+    <section class="hero section" id="home">
+      <canvas id="earth-canvas" aria-hidden="true"></canvas><div class="hero-overlay"></div>
+      <div class="parallax" data-speed=".2" style="top:18%;left:8%"></div><div class="parallax" data-speed=".35" style="top:34%;right:10%"></div><div class="parallax" data-speed=".15" style="top:67%;left:22%"></div>
+      <div class="particle" data-speed=".55" style="top:26%;left:22%"></div><div class="particle" data-speed=".48" style="top:42%;right:14%"></div><div class="particle" data-speed=".62" style="top:72%;left:72%"></div>
+      <!-- windmill added to hero -->
+      <div class="turbine" style="bottom:20%;left:60%;width:100px;height:180px;position:absolute;z-index:3;opacity:.85;">
+        <div class="blade-wrap"><div class="blade"></div><div class="blade"></div><div class="blade"></div></div>
+        <div class="hub"></div>
+        <div class="mast"></div>
+      </div>
+      <div class="hero-content"><span class="tag">Future Energy Starts Here</span><h1>AER - Powering Tomorrow, Sustainably.</h1><p>Clean Energy. Smart Engineering. Global Impact.</p><a href="#services" class="btn magnetic">Explore Solutions</a></div>
+    </section>
+    <section class="section" id="about"><span class="tag section-tag-center">Our Vision & Mission</span><div class="about-grid">
+      <article class="glass service-card tilt-card reveal-up"><h3>Our Vision</h3><p>To accelerate the transition toward a sustainable future by delivering innovative, reliable, and affordable renewable energy solutions that lower carbon footprints, strengthen emerging economies, and create lasting impact for generations.</p></article>
+      <article class="glass service-card tilt-card reveal-up"><h3>Our Mission</h3><p>We drive clean energy adoption through innovation, engineering excellence, and responsible practices - delivering reliable power while protecting the planet and empowering communities worldwide.</p></article>
+    </div></section>
+    <section class="section" id="services"><span class="tag section-tag-center">Core Services</span><div class="services-grid">
+      <article class="service-card reveal-up tilt-card"><div class="icon">S</div><h4>Solar Energy Systems</h4><p>Utility and distributed solar deployments engineered for maximum generation and long-term resilience.</p></article>
+      <article class="service-card reveal-up tilt-card"><div class="icon">B</div><h4>Solar Batteries</h4><p>Intelligent storage architectures balancing performance, safety, and dispatchable power reliability.</p></article>
+      <article class="service-card reveal-up tilt-card"><div class="icon">I</div><h4>Inverter Systems</h4><p>High-efficiency inverter platforms integrating with smart monitoring and grid optimization.</p></article>
+      <article class="service-card reveal-up tilt-card"><div class="icon">W</div><h4>Wind Turbines</h4><p>Modern wind solutions engineered for high output, stable operation, and demanding landscapes.</p></article>
+    </div></section>
+    <section class="section" id="stats"><span class="tag section-tag-center">Global Impact</span><div class="stats">
+      <div class="stat-card service-card tilt-card reveal-up"><h3><span class="counter" data-target="700">0</span>+</h3><p>MW Installed</p></div>
+      <div class="stat-card service-card tilt-card reveal-up"><h3><span class="counter" data-target="20">0</span>+</h3><p>Projects Completed</p></div>
+      <div class="stat-card service-card tilt-card reveal-up"><h3><span class="counter" data-target="1">0</span>+</h3><p>Countries Served</p></div>
+      <div class="stat-card service-card tilt-card reveal-up"><h3><span class="counter" data-target="1">0</span>+</h3><p>Tons Carbon Reduced</p></div>
+    </div></section>
+
+
+
+    <section class="section" id="team">
+      <div class="team-intro reveal-up"><span class="tag">Leadership + Engineering</span><h2>Meet the Minds Behind AER</h2><p>Our 11-member core team combines systems engineering, grid intelligence, storage science, and large-scale deployment expertise.</p></div>
+      <div class="team-grid">
+          <article class="team-card tilt-card reveal-up"><img class="avatar" loading="lazy" src="assets\images\20250613_120931.jpg" alt="Benjo Benny" /><h4>Benjo Benny</h4><p class="role">Founder & CEO</p><a class="linkedin magnetic" href="#">in</a></article>
+          <article class="team-card tilt-card reveal-up"><img class="avatar" loading="lazy" src="assets\images\me.jpg" alt="Vaishnav C" /><h4>Vaishnav C</h4><p class="role">Chief Technical Officer</p><a class="linkedin magnetic" href="https://www.linkedin.com/in/vaishnavc2005/">in</a></article>
+          <article class="team-card tilt-card reveal-up"><img class="avatar" loading="lazy" src="assets\images\Screenshot_20260301_175904_Instagram.jpg" alt="Joyal" /><h4>Joyal</h4><p class="role">Chief Research and Development Officer</p><a class="linkedin magnetic" href="#">in</a></article>
+          <article class="team-card tilt-card reveal-up"><img class="avatar" loading="lazy" src="assets\images\20250502_023035.jpg" alt="Alphin Dominic" /><h4>Alphin Dominic</h4><p class="role">Chief Financial Officer</p><a class="linkedin magnetic" href="#">in</a></article>
+          <article class="team-card tilt-card reveal-up"><img class="avatar" loading="lazy" src="assets\images\iwin.jpg" alt="Iwin Joy" /><h4>Iwin Joy</h4><p class="role">Marketing Director</p><a class="linkedin magnetic" href="#">in</a></article>
+          <article class="team-card tilt-card reveal-up"><img class="avatar" loading="lazy" src="assets\images\Screenshot_20260301_180236_Instagram.jpg" alt="Ans Renny" /><h4>Ans Renny</h4><p class="role">Director, Infrastructure</p><a class="linkedin magnetic" href="#">in</a></article>
+          <article class="team-card tilt-card reveal-up"><img class="avatar" loading="lazy" src="assets\images\Screenshot_20260301_180206_Instagram.jpg" alt="Lins A T" /><h4>Lins A T</h4><p class="role">Grid Analytics Lead</p><a class="linkedin magnetic" href="#">in</a></article>
+          <article class="team-card tilt-card reveal-up"><img class="avatar" loading="lazy" src="assets\images\gopika.jpg" alt="Gopika" /><h4>Gopika</h4><p class="role">Program Director</p><a class="linkedin magnetic" href="#">in</a></article>
+          <article class="team-card tilt-card reveal-up"><img class="avatar" loading="lazy" src="assets\images\arya.jpg" alt="Arya" /><h4>Arya</h4><p class="role">Wind Systems Architect</p><a class="linkedin magnetic" href="#">in</a></article>
+          <article class="team-card tilt-card reveal-up"><img class="avatar" loading="lazy" src="assets\images\20250612_165816.jpg" alt="Jifin" /><h4>Jifin</h4><p class="role">Head of Product Strategy</p><a class="linkedin magnetic" href="#">in</a></article>
+          <article class="team-card tilt-card reveal-up"><img class="avatar" loading="lazy" src="assets\images\anagha.jpg" alt="Anagha" /><h4>Anagha</h4><p class="role">Chief Operations Officer</p><a class="linkedin magnetic" href="#">in</a></article>
+      </div>
+    </section>
+
+    <section class="section" id="contact"><span class="tag">Contact with Us</span><div class="contact-wrap">
+      <div class="contact-panel service-card tilt-card reveal-up" style="width:100%;">
+        <h3 style="font-family:Montserrat,sans-serif;font-size:1.45rem;margin-bottom:6px">Build The Next Energy System</h3><p style="color:var(--muted);margin-bottom:18px;line-height:1.7">Partner with AER for resilient renewable infrastructure, integrated storage, and scalable low-carbon power delivery.</p>
+        <form><div class="field"><input type="text" id="name" placeholder=" " required><label for="name">Full Name</label></div><div class="field"><input type="email" id="email" placeholder=" " required><label for="email">Work Email</label></div><div class="field"><input type="text" id="company" placeholder=" " required><label for="company">Company</label></div><div class="field"><textarea id="message" placeholder=" " required></textarea><label for="message">Your Project Goals</label></div><button type="submit" class="btn magnetic">Send Inquiry</button></form>
+      </div>
+    </div></section>
+  </main>
+  <footer><span>AER Renewable Energy Solutions</span><span>Innovation | Reliability | Sustainability | Global Impact</span></footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
+
+
