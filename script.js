@@ -1,17 +1,23 @@
 
     const $=(s,p=document)=>p.querySelector(s), $$=(s,p=document)=>[...p.querySelectorAll(s)];
     window.addEventListener("load",()=>{
-      initPreloader(); initSmooth(); initThree(); initCursor(); initMagnetic(); initReveal(); initCounters(); initStories(); initTilt(); initParallax(); initHeroTurbine(); initNavToggle();
+      [
+        initPreloader, initSmooth, initThree, initCursor, initMagnetic, initReveal,
+        initCounters, initStories, initTilt, initParallax, initHeroTurbine,
+        initNavToggle, initContactForm
+      ].forEach(fn=>{
+        try{ fn(); }catch(err){ console.warn(`Init failed: ${fn.name}`, err); }
+      });
     });
 
     function initPreloader(){
       const fill=$("#batteryFill"), pre=$("#preloader");
+      if(!pre) return;
+      if(!fill || !window.gsap){ pre.classList.add("hide"); return; }
       gsap.to(fill,{width:"100%",duration:2.1,ease:"power2.out",onComplete:()=>pre.classList.add("hide")});
     }
 
     function initSmooth(){
-      const lenis=new Lenis({duration:1.12,smoothWheel:true,smoothTouch:false});
-      const raf=t=>{lenis.raf(t);requestAnimationFrame(raf)}; requestAnimationFrame(raf);
       $$(".nav-link,.brand").forEach(link=>link.addEventListener("click",e=>{
         const href=link.getAttribute("href");
         if(!href.startsWith("#")) return; // allow normal navigation for external/page links
@@ -19,6 +25,9 @@
         const node=$(href);
         if(node) node.scrollIntoView({behavior:"smooth"});
       }));
+      if(!window.Lenis) return;
+      const lenis=new Lenis({duration:1.12,smoothWheel:true,smoothTouch:false});
+      const raf=t=>{lenis.raf(t);requestAnimationFrame(raf)}; requestAnimationFrame(raf);
     }
 
     function initThree(){
@@ -64,12 +73,17 @@
     }
 
     function initHeroTurbine(){
-      const wrap=document.querySelector('.hero .turbine .blade-wrap');
-      if(!wrap) return;
-      gsap.to(wrap,{rotate:1440,ease:"none",repeat:-1,duration:20});
+      if(!window.gsap) return;
+      // animate every turbine on the page continuously; secondary turbines will also spin
+      const wraps=document.querySelectorAll('.turbine .blade-wrap');
+      if(wraps.length===0) return;
+      wraps.forEach(wrap=>{
+        gsap.to(wrap,{rotate:1440,ease:"none",repeat:-1,duration:20});
+      });
     }
 
     function initMagnetic(){
+      if(!window.gsap) return;
       if(matchMedia("(max-width:900px)").matches) return;
       $$(".magnetic").forEach(el=>{
         el.addEventListener("mousemove",e=>{
@@ -81,11 +95,13 @@
     }
 
     function initReveal(){
+      if(!window.gsap||!window.ScrollTrigger) return;
       gsap.registerPlugin(ScrollTrigger);
       gsap.from(".hero-content .tag,.hero-content h1,.hero-content p,.hero-content .btn",{opacity:0,y:34,duration:1,ease:"power3.out",stagger:.14,delay:1.8});
       $$(".reveal-up").forEach(el=>gsap.from(el,{opacity:0,y:34,duration:.8,ease:"power2.out",scrollTrigger:{trigger:el,start:"top 86%",once:true}}));
     }
     function initCounters(){
+      if(!window.gsap||!window.ScrollTrigger) return;
       $$(".counter").forEach(el=>{
         const target=Number(el.dataset.target||0), obj={v:0};
         gsap.to(obj,{v:target,duration:2,ease:"power3.out",scrollTrigger:{trigger:el,start:"top 85%",once:true},onUpdate:()=>el.textContent=Math.floor(obj.v).toLocaleString()});
@@ -93,6 +109,7 @@
     }
 
     function initStories(){
+      if(!window.gsap||!window.ScrollTrigger) return;
       $$(".scene-bg").forEach(bg=>gsap.to(bg,{yPercent:14,scale:1.1,ease:"none",scrollTrigger:{trigger:bg.parentElement,start:"top bottom",end:"bottom top",scrub:true}}));
       $$(".scene-content").forEach(c=>gsap.from(c,{opacity:0,y:42,duration:1,ease:"power3.out",scrollTrigger:{trigger:c,start:"top 78%"}}));
       $$(".energy-lines path,.wind-lines path").forEach(path=>gsap.to(path,{strokeDashoffset:0,duration:1.5,ease:"power2.out",scrollTrigger:{trigger:path.closest(".scene"),start:"top 72%"}}));
@@ -100,6 +117,7 @@
     }
 
     function initTilt(){
+      if(!window.gsap) return;
       $$(".tilt-card").forEach(card=>{
         card.addEventListener("mousemove",e=>{
           const r=card.getBoundingClientRect(), px=(e.clientX-r.left)/r.width, py=(e.clientY-r.top)/r.height;
@@ -126,5 +144,59 @@
       });
       // close menu when a link is clicked
       $$('.nav-link').forEach(l=>l.addEventListener('click',()=>{links.classList.remove('open');}));
+    }
+
+    function initContactForm(){
+      const form=$("#contactForm");
+      const status=$("#formStatus");
+      if(!form||!status) return;
+
+      const submitBtn=form.querySelector('button[type="submit"]');
+      const defaultBtnText=submitBtn ? submitBtn.textContent : "Send Inquiry";
+
+      form.addEventListener("submit",async(e)=>{
+        e.preventDefault();
+
+        if(!form.checkValidity()){
+          form.reportValidity();
+          return;
+        }
+
+        if(form.action.includes("your_form_id")){
+          status.textContent="Set your Formspree form ID in index.html to activate submissions.";
+          status.className="form-status error";
+          return;
+        }
+
+        try{
+          if(submitBtn){
+            submitBtn.disabled=true;
+            submitBtn.textContent="Sending...";
+          }
+          status.textContent="";
+          status.className="form-status";
+
+          const formData=new FormData(form);
+          const response=await fetch(form.action,{
+            method:"POST",
+            body:formData,
+            headers:{Accept:"application/json"}
+          });
+
+          if(!response.ok) throw new Error("Submission failed");
+
+          form.reset();
+          status.textContent="Thanks. We received your inquiry and will contact you soon.";
+          status.className="form-status success";
+        }catch(err){
+          status.textContent="Could not send inquiry. Please try again.";
+          status.className="form-status error";
+        }finally{
+          if(submitBtn){
+            submitBtn.disabled=false;
+            submitBtn.textContent=defaultBtnText;
+          }
+        }
+      });
     }
   
